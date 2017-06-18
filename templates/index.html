@@ -1,0 +1,45 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <title>Ninja Gold</title>
+      <meta name="Ninja Gold" content="Ninja Gold Project">
+      <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/stylesheet.css') }}">
+
+ </head>
+
+ <header>
+    <p>Your Gold: </p>
+    <div class='bank'>{{ session['bank'] }} gold</div>
+</header>
+<body>
+   <form action="/process_money" method='post'>
+      <h3>Farm</h3>
+      <p>(earns 10 - 20 golds)</p>
+      <input type="button" name='adventure' value='Find gold!'>
+   </form>
+
+   <form action="/process_money" method='post'>
+      <h3>Cave</h3>
+      <p>(earns 5 - 10 golds)</p>
+      <input type="button" name='adventure' value='Find gold!'>
+   </form>
+
+   <form action="/process_money" method='post'>
+      <h3>House</h3>
+      <p>(earns 2 - 5 golds)</p>
+      <input type="button" name='adventure' value='Find gold!'>
+   </form>
+
+   <form action="/process_money" method='post'>
+      <h3>Casino</h3>
+      <p>(earns/takes 0 - 50 golds)</p>
+      <input type="button" name='casino' value='Find gold!'>
+   </form>
+
+</body>
+<footer>
+   <p>Activities:</p>
+   <div id='activity'></div>
+</footer>
