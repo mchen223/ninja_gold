@@ -56,6 +56,13 @@
 </body>
 <footer>
    <h4>Activities:</h4>
-   <div id='activity'><p>{{ session['activity'] }}</p></div>
+   <div id='activity'><p>{{ session['activity'] }}</p>
+      {% with messages = get_flashed_messages() %}
+         {% if messages %}
+            {% for message in messages %}
+               <p>{{message}}</p>
+            {% endfor %}
+         {% endif %}
+      {% endwith %}</div>
    <a href="{{ url_for('reset') }}">Reset</a>
 </footer>

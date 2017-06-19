@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 import random
 from datetime import datetime
 
@@ -15,7 +15,7 @@ def reward():
     elif name == 'house':
         reward = random.randint(2,5)
     elif name == 'casino':
-        reward = random.randint(-50,50)
+        reward = random.randint(-50,5)
     session['bank'] += reward
     session['activity'] += 'Earned '+ str(reward) + ' golds from the ' + str(name) + '! ' + '(' + time + ')' + '.\n'
 
@@ -23,12 +23,13 @@ def reward():
 def index():
     if not session.get('bank'):
         session['bank']=0
-    if session['bank'] < 0:
-        reset()
+    elif session['bank']<0:
+        flash("Game over, man! Game over!")
     return render_template('index.html')
 @app.route('/process_money', methods=['POST'])
 def process():
-    reward()
+    if session['bank'] >= 0:
+        reward()
     return redirect('/')
 
 @app.route('/reset')
