@@ -2,44 +2,60 @@
  <html lang="en">
 
 <head>
-      <meta charset="UTF-8">
-      <title>Ninja Gold</title>
-      <meta name="Ninja Gold" content="Ninja Gold Project">
-      <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/stylesheet.css') }}">
+   <meta charset="UTF-8">
+   <title>Ninja Gold</title>
+   <meta name="Ninja Gold" content="Ninja Gold Project">
+   <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/stylesheet.css') }}">
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <script type="text/javascript">
+      $(document).ready(function(){
+
+      $('submit').click(function() {
+         var name = (this).name;
+         $("#activity").append('Blurrrrrrrrb');
+         })
+     });
+   </script>
 
  </head>
 
  <header>
     <p>Your Gold: </p>
-    <div class='bank'>{{ session['bank'] }} gold</div>
+    <div id='bank'>{{ session['bank'] }} gold</div>
 </header>
 <body>
    <form action="/process_money" method='post'>
+      <input type="hidden" name="action" value="farm">
       <h3>Farm</h3>
       <p>(earns 10 - 20 golds)</p>
-      <input type="button" name='adventure' value='Find gold!'>
+      <input type="submit" value='Find gold!'>
    </form>
 
    <form action="/process_money" method='post'>
+      <input type="hidden" name="action" value="cave">
       <h3>Cave</h3>
       <p>(earns 5 - 10 golds)</p>
-      <input type="button" name='adventure' value='Find gold!'>
+      <input type="submit" value='Find gold!'>
    </form>
 
    <form action="/process_money" method='post'>
+      <input type="hidden" name="action" value="house">
       <h3>House</h3>
       <p>(earns 2 - 5 golds)</p>
-      <input type="button" name='adventure' value='Find gold!'>
+      <input type="submit"value='Find gold!'>
    </form>
 
    <form action="/process_money" method='post'>
+      <input type="hidden" name="action" value="casino">
       <h3>Casino</h3>
       <p>(earns/takes 0 - 50 golds)</p>
-      <input type="button" name='casino' value='Find gold!'>
+      <input type="submit" value='Find gold!'>
    </form>
 
 </body>
 <footer>
-   <p>Activities:</p>
-   <div id='activity'></div>
+   <h4>Activities:</h4>
+   <div id='activity'><p>{{ session['activity'] }}</p></div>
+   <a href="{{ url_for('reset') }}">Reset</a>
 </footer>

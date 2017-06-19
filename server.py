@@ -1,32 +1,39 @@
 from flask import Flask, render_template, request, redirect, session
 import random
+from datetime import datetime
+
 app = Flask(__name__)
 app.secret_key = 'ThisIsASecret'
 
-#def reward(low,high,location):
-#    if form.name=adventure:
-#        session['reward'] = random.randint(low,high)
-#        session['bank']+=session['reward']
-#        activity.append('Earned ',session['reward'],' golds from the ,location,'!')
-#    else
-#        session['reward'] = random.randint(low,high)
-#        session['bank']+=session['reward']
-#        activity.append('Earned ',session['reward'],' golds from the ',location,'!')
-
-def rewardtest():
-    session['reward'] = random.randint(low,high)
-    session['bank']+=session['reward']
-    activity.append('Earned ',session['reward'],' golds from the ',location,'!')
+def reward():
+    time = datetime.now().strftime('%m-%d-%Y %H:%M')
+    name = request.form['action']
+    if name == 'farm':
+        reward = random.randint(10,20)
+    elif name == 'cave':
+        reward = random.randint(5,10)
+    elif name == 'house':
+        reward = random.randint(2,5)
+    elif name == 'casino':
+        reward = random.randint(-50,50)
+    session['bank'] += reward
+    session['activity'] += 'Earned '+ str(reward) + ' golds from the ' + str(name) + '! ' + '(' + time + ')' + '.\n'
 
 @app.route('/')
 def index():
-    session['bank']=0
+    if not session.get('bank'):
+        session['bank']=0
+    if session['bank'] < 0:
+        reset()
     return render_template('index.html')
-
 @app.route('/process_money', methods=['POST'])
 def process():
-    rewardtest(5,10,farm)
-    return render_template('index.html')
+    reward()
+    return redirect('/')
+
+@app.route('/reset')
+def reset():
+    session.clear()
     return redirect('/')
 
 app.run(debug=True)
